@@ -2,7 +2,8 @@ package Patterns::UndefObject;
 
 our $VERSION = '0.001';
 
-use Moo;
+use strict;
+use warnings;
 use Sub::Exporter -setup => {
   exports => [ Maybe => \'_export_maybe' ],
 };
@@ -13,7 +14,9 @@ use overload
   'fallback' => 0,
   'nomethod' => \&_err_nonbool;
 
-sub _err_nonbool { die "Only boolean context is permitted" }
+sub new { bless {}, shift }
+
+sub AUTOLOAD { shift }
 
 sub _export_maybe {
   my $class = shift;
@@ -28,7 +31,7 @@ sub maybe {
     $class->new;
 }
 
-sub AUTOLOAD { shift }
+sub _err_nonbool { die "Only boolean context is permitted" }
 
 1;
 
