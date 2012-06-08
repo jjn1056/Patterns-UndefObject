@@ -30,5 +30,4 @@ my $real = bless {a=>100}, 'Example::Class:111';
 
 is Maybe($real)->{a} || 100, '100';
 
-
 done_testing;
