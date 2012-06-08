@@ -5,17 +5,14 @@ use Sub::Exporter -setup => {
   exports => [ Maybe => \'_export_maybe' ],
 };
 
-has 'original' => (
-  is=>'bare', predicate=>'has_original');
-
-use overload 'bool' => sub { shift->has_original };
+use overload 'bool' => sub { 0 };
 
 sub AUTOLOAD { shift }
 
 sub maybe {
   my ($class, $obj) = @_;
   return defined $obj ? $obj :
-    $class->new(original=>$obj);
+    $class->new;
 }
 
 sub _export_maybe {
