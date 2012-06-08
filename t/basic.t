@@ -24,4 +24,6 @@ ok(
   ! (my $res = Maybe($undef)->g),
   'Failed as expected');
 
+is Maybe($undef)->a || 'a', 'a';
+
 done_testing;

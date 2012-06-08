@@ -1,42 +1,8 @@
-package Patterns::UndefObject;
-
-our $VERSION = '0.001';
-
-use Moo;
-use Sub::Exporter -setup => {
-  exports => [ Maybe => \'_export_maybe' ],
-};
-
-use overload
-  'bool' => sub { 0 },
-  '!' => sub { 1 },
-  'fallback' => 0,
-  'nomethod' => \&_err_nonbool;
-
-sub _err_nonbool { die "Only boolean context is permitted" }
-
-sub _export_maybe {
-  my $class = shift;
-  return sub {
-    $class->maybe(@_);
-  }
-}
-
-sub maybe {
-  my ($class, $obj) = @_;
-  return defined $obj ? $obj :
-    $class->new;
-}
-
-sub AUTOLOAD { shift }
-
-1;
-
-=head1 NAME
+# NAME
 
 Patterns::UndefObject - A version of the undefined object (null object) pattern
 
-=head1 SYNOPSIS
+# SYNOPSIS
 
     use Patterns::UndefObject 'Maybe';
 
@@ -44,11 +10,12 @@ Patterns::UndefObject - A version of the undefined object (null object) pattern
       || 'Unknown Username';
 
 
-=head1 DESCRIPTION
+
+# DESCRIPTION
 
 Sometimes when you are calling methods on a object you can't be sure that a
 particular call chain is going to be valid.  For example, if you are using
-something like L<DBIx::Class> you might start by finding out if a given user
+something like [DBIx::Class](http://search.cpan.org/perldoc?DBIx::Class) you might start by finding out if a given user
 exists in a database and then following that user's relationships for a given
 purpose:
 
@@ -59,8 +26,8 @@ purpose:
       ->primary;
 
 However this call chain will die hard during dynamic invocation should the
-method call C<find(100)> fail to find a user.  This failure would return a
-value of C<undef> and then a subsequent "Can't call method 'telephone_numbers'
+method call `find(100)` fail to find a user.  This failure would return a
+value of `undef` and then a subsequent "Can't call method 'telephone\_numbers'
 on an undefined value.
 
 This often leads to writing a lot of defensive code:
@@ -80,10 +47,10 @@ down the chain should the relationships not be required ones.
 I believe this kind of boilerplate defensive code is time consuming and
 distracting to the reader.  Its verbosity draws one's attention away from the
 prime purpose of the code.  Additionally, it feels like a bit of a code smell
-for good object oriented design.  L<Patterns::UndefObject> offers one possible 
-approach to this issue.  This class defined a factor method L</maybe> which
+for good object oriented design.  [Patterns::UndefObject](http://search.cpan.org/perldoc?Patterns::UndefObject) offers one possible 
+approach to this issue.  This class defined a factor method ["maybe"](#maybe) which
 accepts one argument and returns that argument if it is defined.  Otherwise, it
-returns an instance of L<Patterns::UndefObject>, which defines C<AUTOLOAD> such
+returns an instance of [Patterns::UndefObject](http://search.cpan.org/perldoc?Patterns::UndefObject), which defines `AUTOLOAD` such
 that no matter what method is called, it always returns itself.  This allows you
 to call any arbitrary length of method chains of that initial object without
 causing an exception to stop you code.
@@ -99,7 +66,7 @@ following:
       ->telephone_numbers
       ->primary || 'Unknown Number';
 
-You can use the available export C<Maybe> to make this a bit more concise (
+You can use the available export `Maybe` to make this a bit more concise (
 particularly if you need to use it several times).
 
     use Patterns::UndefObject 'Maybe';
@@ -111,47 +78,45 @@ Personally I find this pattern leads to more concise and readable code and it
 also provokes deeper though about ways one can use similar techniques to better
 encapulate certain types of presentation logic.
 
-=head1 METHODS
+# METHODS
 
 This class exposes the following public methods
 
-=head2 maybe
+## maybe
 
     my $user = Patterns::UndefObject->maybe( $user->find(100)) || "Unknown";
 
 Accepts a single argument which should be an object or an undefined value.  If
 it is a defined object, return that object, otherwise return an instance of
-L<Patterns::UndefObject>.
+[Patterns::UndefObject](http://search.cpan.org/perldoc?Patterns::UndefObject).
 
 This is considered a class method.
 
-=head1 EXPORTS
+# EXPORTS
 
 This class defines the following exports functions.
 
-=head2 Maybe
+## Maybe
 
     use Patterns::UndefObject 'Maybe';
     my $user = Maybe($user->find(100)) || "Unknown";
 
-Is a function that wraps the the class method L</maybe> such as to provide a
+Is a function that wraps the the class method ["maybe"](#maybe) such as to provide a
 more concise helper.
 
-=head1 SEE ALSO
+# SEE ALSO
 
 The following modules or resources may be of interest.
 
-L<Moo>, L<Sub::Exporter>
+[Moo](http://search.cpan.org/perldoc?Moo), [Sub::Exporter](http://search.cpan.org/perldoc?Sub::Exporter)
 
-=head1 AUTHOR
+# AUTHOR
 
     John Napiorkowski C<< <jjnapiork@cpan.org> >>
 
-=head1 COPYRIGHT & LICENSE
+# COPYRIGHT & LICENSE
 
-Copyright 2012, John Napiorkowski C<< <jjnapiork@cpan.org> >>
+Copyright 2012, John Napiorkowski `<jjnapiork@cpan.org>`
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
-
-=cut
