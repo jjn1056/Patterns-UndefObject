@@ -114,6 +114,13 @@ Personally I find this pattern leads to more concise and readable code and it
 also provokes deeper though about ways one can use similar techniques to better
 encapulate certain types of presentation logic.
 
+=head1 AUTHOR NOTE
+
+Should you actually use this class?  Personally I have no problem with people
+using it and asking for me to support it, however I tend to think this module
+is probably more about inspiring thoughts related to object oriented code,
+polymorphism, and clean separation of code.  Thanks!
+
 =head1 METHODS
 
 This class exposes the following public methods

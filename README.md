@@ -78,6 +78,13 @@ Personally I find this pattern leads to more concise and readable code and it
 also provokes deeper though about ways one can use similar techniques to better
 encapulate certain types of presentation logic.
 
+# AUTHOR NOTE
+
+Should you actually use this class?  Personally I have no problem with people
+using it and asking for me to support it, however I tend to think this module
+is probably more about inspiring thoughts related to object oriented code,
+polymorphism, and clean separation of code.  Thanks!
+
 # METHODS
 
 This class exposes the following public methods
@@ -108,7 +115,7 @@ more concise helper.
 
 The following modules or resources may be of interest.
 
-[Moo](http://search.cpan.org/perldoc?Moo), [Sub::Exporter](http://search.cpan.org/perldoc?Sub::Exporter)
+[Sub::Exporter](http://search.cpan.org/perldoc?Sub::Exporter)
 
 # AUTHOR
 
