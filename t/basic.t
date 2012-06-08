@@ -14,7 +14,7 @@ my $undef;
 ok ! eval {  $undef->a->b->c; 1 },
   "Dies as expected";
 
-ok eval {  Maybe($undef)->a->b->c; 1 },
+ok eval {  Maybe($undef)->d->e->f; 1 },
   "Passes!";
 
 ok ! eval {  Maybe(1)->a->b->c; 1 },

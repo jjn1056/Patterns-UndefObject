@@ -5,7 +5,11 @@ use Sub::Exporter -setup => {
   exports => [ Maybe => \'_export_maybe' ],
 };
 
-use overload 'bool' => sub { 0 };
+use overload
+  'bool' => sub { 0 },
+  '!' => sub { 1 },
+  'nomethod' => sub { die "Only boolean context is permitted" },
+  'fallback' => 0;
 
 sub AUTOLOAD { shift }
 
