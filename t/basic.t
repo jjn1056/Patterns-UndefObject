@@ -20,4 +20,8 @@ ok eval {  Maybe($undef)->d->e->f; 1 },
 ok ! eval {  Maybe(1)->a->b->c; 1 },
   "Fails when not an object";
 
+ok(
+  ! (my $res = Maybe($undef)->g),
+  'Failed as expected');
+
 done_testing;

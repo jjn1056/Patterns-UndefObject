@@ -8,16 +8,10 @@ use Sub::Exporter -setup => {
 use overload
   'bool' => sub { 0 },
   '!' => sub { 1 },
-  'nomethod' => sub { die "Only boolean context is permitted" },
-  'fallback' => 0;
+  'fallback' => 0,
+  'nomethod' => \&_err_nonbool;
 
-sub AUTOLOAD { shift }
-
-sub maybe {
-  my ($class, $obj) = @_;
-  return defined $obj ? $obj :
-    $class->new;
-}
+sub _err_nonbool { die "Only boolean context is permitted" }
 
 sub _export_maybe {
   my $class = shift;
@@ -25,5 +19,13 @@ sub _export_maybe {
     $class->maybe(@_);
   }
 }
+
+sub maybe {
+  my ($class, $obj) = @_;
+  return defined $obj ? $obj :
+    $class->new;
+}
+
+sub AUTOLOAD { shift }
 
 1;
