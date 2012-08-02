@@ -1,5 +1,10 @@
 This file documents the revision history for Perl extension Patterns-UndefObject.
 
+0.003   01 August 2012
+        - Fixed a few more typos in the documention
+        - We now properly set the development repository, should people wish
+          to contribute.
+
 0.002   01 August 2012	
         - Added missing change file
         - documentation updates, include a caveats / warning section

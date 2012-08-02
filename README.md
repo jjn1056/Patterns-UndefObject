@@ -55,7 +55,7 @@ Otherwise, it returns an instance of [Patterns::UndefObject](http://search.cpan.
 This allows you to call any arbitrary length of method chains of that initial
 object without causing an exception to stop your code.
 
-This object overloads boolean context such that when evaluated as a bool, it 
+This object overloads boolean context such that when evaluated as a bool, it
 always returns false.  If you try to evaluate it in any other way, you will
 get an exception.  This allows you to replace the above code sample with the
 following:
@@ -76,7 +76,7 @@ particularly if you need to use it several times).
 
 Personally I find this pattern leads to more concise and readable code and it
 also provokes deeper though about ways one can use similar techniques to better
-encapulate certain types of presentation logic.
+encapsulate certain types of presentation logic.
 
 # AUTHOR NOTE
 
@@ -88,8 +88,8 @@ polymorphism, and clean separation of ideas.
 __Note:__ Please be aware that the undefined object pattern is not a cure-all
 and in fact can have some significant issues, among the being the fact that it
 can lead to difficult to debug typos and similar bugs.  Think of its downsides
-as being similar to how Perl autovivifies Hashs, expect possible worse!  In
-particular this problem can manifest when deeping chaining methods (something
+as being similar to how Perl autovivifies Hashs, expect possibly worse!  In
+particular this problem can manifest when deeply chaining methods (something
 you might wish to avoid in most cases anyway).
 
 # METHODS
