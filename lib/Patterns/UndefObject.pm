@@ -1,37 +1,30 @@
 package Patterns::UndefObject;
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 
 use strict;
 use warnings;
+use Scalar::Util 'blessed';
 use Sub::Exporter -setup => {
-  exports => [ Maybe => \'_export_maybe' ],
+  exports => [ Maybe => sub {
+    my $c = shift;
+    return sub { $c->maybe(@_) };
+  } ],
 };
 
 use overload
   'bool' => sub { 0 },
   '!' => sub { 1 },
-  'fallback' => 0,
-  'nomethod' => \&_err_nonbool;
-
-sub new { bless {}, shift }
+  'fallback' => 0;
 
 sub AUTOLOAD { shift }
 
-sub _export_maybe {
-  my $class = shift;
-  return sub {
-    $class->maybe(@_);
-  }
-}
-
 sub maybe {
-  my ($class, $obj) = @_;
-  return defined $obj ? $obj :
-    $class->new;
+  blessed $_[0] ? $_[0] : do {
+    my ($class, $obj) = @_;
+    defined $obj ? $obj :
+      bless {}, $class };
 }
-
-sub _err_nonbool { die "Only boolean context is permitted" }
 
 1;
 
@@ -77,19 +70,19 @@ This often leads to writing a lot of defensive code:
       $primary = "Unknown Number";
     }
 
-Of course, to be truly safe, you'll need to write defense code all the way
+Of course, to be truly safe, you'll need to write defensive code all the way
 down the chain should the relationships not be required ones.
 
 I believe this kind of boilerplate defensive code is time consuming and
 distracting to the reader.  Its verbosity draws one's attention away from the
 prime purpose of the code.  Additionally, it feels like a bit of a code smell
-for good object oriented design.  L<Patterns::UndefObject> offers one possible 
-approach to this issue.  This class defined a factor method L</maybe> which
-accepts one argument and returns that argument if it is defined.  Otherwise, it
-returns an instance of L<Patterns::UndefObject>, which defines C<AUTOLOAD> such
-that no matter what method is called, it always returns itself.  This allows you
-to call any arbitrary length of method chains of that initial object without
-causing an exception to stop you code.
+for good object oriented design.  L<Patterns::UndefObject> offers one possible
+approach to addressing this issue.  This class defined a factory method called
+L</maybe> which accepts one argument and returns that argument if it is defined.
+Otherwise, it returns an instance of L<Patterns::UndefObject>, which defines
+C<AUTOLOAD> such that no matter what method is called, it always returns itself.
+This allows you to call any arbitrary length of method chains of that initial
+object without causing an exception to stop your code.
 
 This object overloads boolean context such that when evaluated as a bool, it 
 always returns false.  If you try to evaluate it in any other way, you will
@@ -119,7 +112,14 @@ encapulate certain types of presentation logic.
 Should you actually use this class?  Personally I have no problem with people
 using it and asking for me to support it, however I tend to think this module
 is probably more about inspiring thoughts related to object oriented code,
-polymorphism, and clean separation of code.  Thanks!
+polymorphism, and clean separation of ideas.
+
+B<Note:> Please be aware that the undefined object pattern is not a cure-all
+and in fact can have some significant issues, among the being the fact that it
+can lead to difficult to debug typos and similar bugs.  Think of its downsides
+as being similar to how Perl autovivifies Hashs, expect possible worse!  In
+particular this problem can manifest when deeping chaining methods (something
+you might wish to avoid in most cases anyway).
 
 =head1 METHODS
 
@@ -144,14 +144,14 @@ This class defines the following exports functions.
     use Patterns::UndefObject 'Maybe';
     my $user = Maybe($user->find(100)) || "Unknown";
 
-Is a function that wraps the the class method L</maybe> such as to provide a
+Is a function that wraps the class method L</maybe> such as to provide a
 more concise helper.
 
 =head1 SEE ALSO
 
 The following modules or resources may be of interest.
 
-L<Sub::Exporter>
+L<Sub::Exporter>, L<Scalar::Util>
 
 =head1 AUTHOR
 

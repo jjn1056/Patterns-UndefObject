@@ -41,19 +41,19 @@ This often leads to writing a lot of defensive code:
       $primary = "Unknown Number";
     }
 
-Of course, to be truly safe, you'll need to write defense code all the way
+Of course, to be truly safe, you'll need to write defensive code all the way
 down the chain should the relationships not be required ones.
 
 I believe this kind of boilerplate defensive code is time consuming and
 distracting to the reader.  Its verbosity draws one's attention away from the
 prime purpose of the code.  Additionally, it feels like a bit of a code smell
-for good object oriented design.  [Patterns::UndefObject](http://search.cpan.org/perldoc?Patterns::UndefObject) offers one possible 
-approach to this issue.  This class defined a factor method ["maybe"](#maybe) which
-accepts one argument and returns that argument if it is defined.  Otherwise, it
-returns an instance of [Patterns::UndefObject](http://search.cpan.org/perldoc?Patterns::UndefObject), which defines `AUTOLOAD` such
-that no matter what method is called, it always returns itself.  This allows you
-to call any arbitrary length of method chains of that initial object without
-causing an exception to stop you code.
+for good object oriented design.  [Patterns::UndefObject](http://search.cpan.org/perldoc?Patterns::UndefObject) offers one possible
+approach to addressing this issue.  This class defined a factory method called
+["maybe"](#maybe) which accepts one argument and returns that argument if it is defined.
+Otherwise, it returns an instance of [Patterns::UndefObject](http://search.cpan.org/perldoc?Patterns::UndefObject), which defines
+`AUTOLOAD` such that no matter what method is called, it always returns itself.
+This allows you to call any arbitrary length of method chains of that initial
+object without causing an exception to stop your code.
 
 This object overloads boolean context such that when evaluated as a bool, it 
 always returns false.  If you try to evaluate it in any other way, you will
@@ -83,7 +83,14 @@ encapulate certain types of presentation logic.
 Should you actually use this class?  Personally I have no problem with people
 using it and asking for me to support it, however I tend to think this module
 is probably more about inspiring thoughts related to object oriented code,
-polymorphism, and clean separation of code.  Thanks!
+polymorphism, and clean separation of ideas.
+
+__Note:__ Please be aware that the undefined object pattern is not a cure-all
+and in fact can have some significant issues, among the being the fact that it
+can lead to difficult to debug typos and similar bugs.  Think of its downsides
+as being similar to how Perl autovivifies Hashs, expect possible worse!  In
+particular this problem can manifest when deeping chaining methods (something
+you might wish to avoid in most cases anyway).
 
 # METHODS
 
@@ -108,14 +115,14 @@ This class defines the following exports functions.
     use Patterns::UndefObject 'Maybe';
     my $user = Maybe($user->find(100)) || "Unknown";
 
-Is a function that wraps the the class method ["maybe"](#maybe) such as to provide a
+Is a function that wraps the class method ["maybe"](#maybe) such as to provide a
 more concise helper.
 
 # SEE ALSO
 
 The following modules or resources may be of interest.
 
-[Sub::Exporter](http://search.cpan.org/perldoc?Sub::Exporter)
+[Sub::Exporter](http://search.cpan.org/perldoc?Sub::Exporter), [Scalar::Util](http://search.cpan.org/perldoc?Scalar::Util)
 
 # AUTHOR
 

@@ -1,7 +1,7 @@
 use Test::Most;
 use Patterns::UndefObject 'Maybe';
 
-ok ref(my $obj = Patterns::UndefObject->new),
+ok ref(my $obj = Patterns::UndefObject->maybe),
   "Created Object";
 
 ok eval {  $obj->a->b->c; 1 },
