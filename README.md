@@ -9,13 +9,11 @@ Patterns::UndefObject - A version of the undefined object (null object) pattern
     my $name = Maybe($user_rs->find(100))->name
       || 'Unknown Username';
 
-
-
 # DESCRIPTION
 
 Sometimes when you are calling methods on a object you can't be sure that a
 particular call chain is going to be valid.  For example, if you are using
-something like [DBIx::Class](http://search.cpan.org/perldoc?DBIx::Class) you might start by finding out if a given user
+something like [DBIx::Class](https://metacpan.org/pod/DBIx::Class) you might start by finding out if a given user
 exists in a database and then following that user's relationships for a given
 purpose:
 
@@ -47,10 +45,10 @@ down the chain should the relationships not be required ones.
 I believe this kind of boilerplate defensive code is time consuming and
 distracting to the reader.  Its verbosity draws one's attention away from the
 prime purpose of the code.  Additionally, it feels like a bit of a code smell
-for good object oriented design.  [Patterns::UndefObject](http://search.cpan.org/perldoc?Patterns::UndefObject) offers one possible
+for good object oriented design.  [Patterns::UndefObject](https://metacpan.org/pod/Patterns::UndefObject) offers one possible
 approach to addressing this issue.  This class defined a factory method called
 ["maybe"](#maybe) which accepts one argument and returns that argument if it is defined.
-Otherwise, it returns an instance of [Patterns::UndefObject](http://search.cpan.org/perldoc?Patterns::UndefObject), which defines
+Otherwise, it returns an instance of [Patterns::UndefObject](https://metacpan.org/pod/Patterns::UndefObject), which defines
 `AUTOLOAD` such that no matter what method is called, it always returns itself.
 This allows you to call any arbitrary length of method chains of that initial
 object without causing an exception to stop your code.
@@ -85,7 +83,7 @@ using it and asking for me to support it, however I tend to think this module
 is probably more about inspiring thoughts related to object oriented code,
 polymorphism, and clean separation of ideas.
 
-__Note:__ Please be aware that the undefined object pattern is not a cure-all
+**Note:** Please be aware that the undefined object pattern is not a cure-all
 and in fact can have some significant issues, among the being the fact that it
 can lead to difficult to debug typos and similar bugs.  Think of its downsides
 as being similar to how Perl autovivifies Hashs, expect possibly worse!  In
@@ -102,7 +100,7 @@ This class exposes the following public methods
 
 Accepts a single argument which should be an object or an undefined value.  If
 it is a defined object, return that object, otherwise return an instance of
-[Patterns::UndefObject](http://search.cpan.org/perldoc?Patterns::UndefObject).
+[Patterns::UndefObject](https://metacpan.org/pod/Patterns::UndefObject).
 
 This is considered a class method.
 
@@ -122,7 +120,7 @@ more concise helper.
 
 The following modules or resources may be of interest.
 
-[Sub::Exporter](http://search.cpan.org/perldoc?Sub::Exporter), [Scalar::Util](http://search.cpan.org/perldoc?Scalar::Util)
+[Sub::Exporter](https://metacpan.org/pod/Sub::Exporter), [Scalar::Util](https://metacpan.org/pod/Scalar::Util)
 
 # AUTHOR
 
@@ -130,7 +128,7 @@ The following modules or resources may be of interest.
 
 # COPYRIGHT & LICENSE
 
-Copyright 2012, John Napiorkowski `<jjnapiork@cpan.org>`
+Copyright 2015, John Napiorkowski `<jjnapiork@cpan.org>`
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
