@@ -1,5 +1,9 @@
 This file documents the revision history for Perl extension Patterns-UndefObject.
 
+0.004   11 February 2015
+        - Changed the way the dependencies are listed to solve installation issue
+        - added a new way to use this via the 'maybe' namespace.
+
 0.003   01 August 2012
         - Fixed a few more typos in the documention
         - We now properly set the development repository, should people wish

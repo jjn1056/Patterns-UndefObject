@@ -1,6 +1,6 @@
 package Patterns::UndefObject;
 
-our $VERSION = '0.003';
+our $VERSION = '0.004';
 
 use strict;
 use warnings;
@@ -159,7 +159,7 @@ L<Sub::Exporter>, L<Scalar::Util>
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2012, John Napiorkowski C<< <jjnapiork@cpan.org> >>
+Copyright 2015, John Napiorkowski C<< <jjnapiork@cpan.org> >>
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
