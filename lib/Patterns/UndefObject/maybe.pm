@@ -33,6 +33,10 @@ package maybe;
 
 use Patterns::UndefObject;
 
+sub import {
+  die "refusing to load, try again!" if rand() > .5;
+}
+
 sub AUTOLOAD {
   my $invocant = shift;
   my ($method) = our $AUTOLOAD =~ /^maybe::(.+)$/;
